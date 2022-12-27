@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+    <link rel="icon" href="https://sprint-planner.000webhostapp.com/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+	<script src="vex.combined.min.js"></script>
+    <script>
+        vex.defaultOptions.className = 'prompt vex-theme-plain';
+        vex.dialog.buttons.YES.className = 'button ok';
+        vex.dialog.buttons.NO.className = 'button cancel';
+    </script>
+    <link rel="stylesheet" href="vex.css"/>
+    <link rel="stylesheet" href="vex-theme-plain.css"/>
+	</head>
+	<body>
+		<div id="container">
+			<div class="fullsize">
+                <p id="test" style="position: absolute"></p>
+				<p class="text" id="title" data-pt="24">Sprint<br>Progress<br>Planner</p>
+                <button id="edit" onclick="">
+                    <span class="text button-text" data-pt="19">Edit</span>
+                </button>
+
+				<p class="text" id="week1" data-pt="19">Week 1</p> 
+				<p class="text" id="week2" data-pt="19">Week 2</p> 
+				<p class="text" id="week3" data-pt="19">Week 3</p> 
+				<p class="text" id="week4" data-pt="19">Week 4</p> 
+				<p class="text" id="week5" data-pt="19">Week 5</p> 
+				<p class="text" id="week6" data-pt="19">Week 6</p>
+				
+                <!---->
+				<p class="text class" id="class0" data-pt="14"></p>
+				<p class="text class" id="class1" data-pt="14"></p>
+				<p class="text class" id="class2" data-pt="14"></p>
+				<p class="text class" id="class3" data-pt="14"></p>
+                <p class="text class" id="class4" data-pt="14"></p>
+                <!---->
+
+				<div class="vline" id="a"></div>
+				<div class="vline" id="b"></div>
+				<div class="vline" id="c"></div>
+				<div class="vline" id="d"></div>
+				<div class="vline" id="e"></div>
+				<div class="vline" id="f"></div>
+				<div class="vline" id="g"></div>
+
+				<div class="hline" id="a"></div>
+				<div class="hline" id="b"></div>
+				<div class="hline" id="c"></div>
+				<div class="hline" id="d"></div>
+				<div class="hline" id="e"></div>
+                <div class="hline" id="f"></div>
+                
+                <div class="class-content" id="cc0"></div>
+                <div class="class-content" id="cc1"></div>
+                <div class="class-content" id="cc2"></div>
+                <div class="class-content" id="cc3"></div>
+                <div class="class-content" id="cc4"></div>
+                
+                <button class="edit-class-button" id="ecb0"><span class="text button-text" style="color: black" data-pt="9">+</span></button>
+                <button class="edit-class-button" id="ecb1"><span class="text button-text" style="color: black" data-pt="9">+</span></button>
+                <button class="edit-class-button" id="ecb2"><span class="text button-text" style="color: black" data-pt="9">+</span></button>
+                <button class="edit-class-button" id="ecb3"><span class="text button-text" style="color: black" data-pt="9">+</span></button>
+                <button class="edit-class-button" id="ecb4"><span class="text button-text" style="color: black" data-pt="9">+</span></button>
+			</div>
+		</div>
+		<script src="./renderer.js"></script>
+        <script>
+            window.addEventListener("resize", resize);
+            document.querySelector("#edit").addEventListener("click", onEditClick);
+            for (var i=0;i<5;i++){
+                 document.querySelector("#ecb"+i).setAttribute("onclick", "onEditClassClick(this)");
+            }
+            
+            if (localStorage.getItem("_init_")!="_init_"){
+                localStorage.setItem("classes", JSON.stringify([[EMPTY], [EMPTY], [EMPTY], [EMPTY], [EMPTY]]));
+                localStorage.setItem("_init_", "_init_");
+            } else {
+                var classes = JSON.parse(localStorage.getItem("classes"));
+                for (var i=0;i<classes.length;i++){
+                    if (classes[i][0]==EMPTY)
+                        continue;
+                    else if (classes[i][0]==SLIDER){
+                        addSliderClass(classes[i][1],classes[i][2],classes[i][3],classes[i][4],i)
+                    } else if (classes[i][0]==ASSIGNMENT){
+                        addAssignmentClass(classes[i][1], classes[i][2], classes[i][3], i);
+                    } else if (classes[i][0]==TASK){
+                        addTaskClass(classes[i][1], classes[i][2], classes[i][3], i);
+                    }
+                }
+            }
+            
+            resize();
+        </script>
+	</body>
+</html>
