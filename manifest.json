@@ -1,0 +1,16 @@
+{
+  "short_name": "Sprint Planner",
+  "name": "Sprint Planner",
+  "description": "",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "558x558",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "theme_color": "#F5C33E",
+  "background_color": "#ffffff"
+}
